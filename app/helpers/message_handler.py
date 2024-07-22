@@ -1,6 +1,6 @@
 import os
 from telegram import Update
-from telegram import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from telegram import ContextTypes
 
 
 def handle_response(txt: str) -> str:
