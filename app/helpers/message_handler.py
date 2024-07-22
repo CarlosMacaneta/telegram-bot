@@ -1,19 +1,14 @@
 import os
 from telegram import Update
 from telegram.ext import ContextTypes
+from app.helpers.ai.gemini_ai import get_gemini_model
 
 
 def handle_response(txt: str) -> str:
-    if 'hello' in txt.lower():
-        return 'Hi there!'
-    elif 'how are you' in txt.lower() or 'how are you?' in txt.lower():
-        return 'I am good thanks.\nHow can I help?'
-    elif 'I need to learn something' in txt.lower():
-        return 'What would you like to learn?'
-    elif 'anything' in txt.lower() or 'teach me what you know' in txt.lower():
-        return "Alright, let's roll up your sleeves🙂"
-    else:
-        return 'I do not understand what you were trying to say.\nPlease try again later.'
+    chat = get_gemini_model().start_chat(history=[])
+    response = chat.send_message(txt)
+    
+    return response.text
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
